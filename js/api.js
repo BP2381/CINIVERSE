@@ -5,12 +5,9 @@
 
 const API = {
   // ─── CONFIG ───────────────────────────────────────────────
-  // Detect environment — local vs Netlify deployed
-  BASE: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? '/.netlify/functions'
-    : '/api',
+  BASE: '/.netlify/functions',
 
-  TMDB_IMG:  'https://image.tmdb.org/t/p',
+  TMDB_IMG:   'https://image.tmdb.org/t/p',
   JIKAN_BASE: 'https://api.jikan.moe/v4',
   CACHE:      new Map(),
   CACHE_TTL:  5 * 60 * 1000,
