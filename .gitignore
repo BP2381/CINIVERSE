@@ -1,0 +1,14 @@
+# Secret keys - NEVER commit these
+config.js
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json

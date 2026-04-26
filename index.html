@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEVERSE — Discover Movies & Anime</title>
+  <meta name="description" content="Your cinematic universe. Discover trending movies, anime, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">CINEVERSE</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#" class="nav-link active" data-section="movies">Movies</a>
+        <a href="#" class="nav-link" data-section="anime">Anime</a>
+        <a href="#" class="nav-link" data-section="trending">Trending</a>
+        <a href="#" class="nav-link" data-section="top-rated">Top Rated</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchToggle" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="icon-btn" id="watchlistBtn" aria-label="Watchlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span class="badge" id="watchlistBadge">0</span>
+        </button>
+        <button class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#" class="mobile-nav-link" data-section="movies">Movies</a>
+      <a href="#" class="mobile-nav-link" data-section="anime">Anime</a>
+      <a href="#" class="mobile-nav-link" data-section="trending">Trending</a>
+      <a href="#" class="mobile-nav-link" data-section="top-rated">Top Rated</a>
+    </div>
+  </nav>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay-inner">
+      <button class="search-close" id="searchClose">✕</button>
+      <div class="search-wrapper">
+        <div class="search-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search movies, anime, actors..." autocomplete="off" spellcheck="false" />
+        <button class="voice-btn" id="voiceBtn" title="Voice search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+      </div>
+      <div class="search-hints" id="searchHints">
+        <p class="hints-label">Trending searches</p>
+        <div class="hints-list" id="hintsList"></div>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- HERO / SPOTLIGHT -->
+  <section class="hero" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge" id="heroBadge">● NOW TRENDING</div>
+      <h1 class="hero-title" id="heroTitle">Loading...</h1>
+      <div class="hero-meta" id="heroMeta"></div>
+      <p class="hero-overview" id="heroOverview"></p>
+      <div class="hero-actions">
+        <button class="btn-primary" id="heroDetailsBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Watch Trailer
+        </button>
+        <button class="btn-ghost" id="heroWatchlistBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Add to Watchlist
+        </button>
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+    <button class="hero-prev" id="heroPrev">‹</button>
+    <button class="hero-next" id="heroNext">›</button>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" id="filterBar">
+    <div class="filter-container">
+      <div class="filter-scroll">
+        <button class="filter-chip active" data-genre="all">All</button>
+        <button class="filter-chip" data-genre="28">Action</button>
+        <button class="filter-chip" data-genre="35">Comedy</button>
+        <button class="filter-chip" data-genre="18">Drama</button>
+        <button class="filter-chip" data-genre="27">Horror</button>
+        <button class="filter-chip" data-genre="878">Sci-Fi</button>
+        <button class="filter-chip" data-genre="53">Thriller</button>
+        <button class="filter-chip" data-genre="16">Animation</button>
+        <button class="filter-chip" data-genre="10749">Romance</button>
+        <button class="filter-chip" data-genre="12">Adventure</button>
+        <button class="filter-chip" data-genre="14">Fantasy</button>
+        <button class="filter-chip" data-genre="80">Crime</button>
+      </div>
+      <div class="filter-controls">
+        <select class="filter-select" id="sortSelect">
+          <option value="popularity.desc">Most Popular</option>
+          <option value="vote_average.desc">Highest Rated</option>
+          <option value="release_date.desc">Newest</option>
+          <option value="revenue.desc">Box Office</option>
+        </select>
+        <select class="filter-select" id="yearSelect">
+          <option value="">Any Year</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TRENDING ROW -->
+    <section class="content-section" id="trendingSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">🔥</span>
+          <h2 class="section-title">Trending This Week</h2>
+        </div>
+        <a href="#" class="see-all" data-section="trending">See All →</a>
+      </div>
+      <div class="row-wrapper">
+        <button class="row-arrow row-arrow--left" data-row="trending">‹</button>
+        <div class="movies-row" id="trendingRow">
+          <div class="skeleton-row"></div>
+        </div>
+        <button class="row-arrow row-arrow--right" data-row="trending">›</button>
+      </div>
+    </section>
+
+    <!-- NOW PLAYING -->
+    <section class="content-section" id="nowPlayingSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">🎬</span>
+          <h2 class="section-title">Now Playing</h2>
+        </div>
+        <a href="#" class="see-all" data-section="now-playing">See All →</a>
+      </div>
+      <div class="row-wrapper">
+        <button class="row-arrow row-arrow--left" data-row="nowplaying">‹</button>
+        <div class="movies-row" id="nowPlayingRow"></div>
+        <button class="row-arrow row-arrow--right" data-row="nowplaying">›</button>
+      </div>
+    </section>
+
+    <!-- ANIME SECTION -->
+    <section class="content-section anime-section" id="animeSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">⛩️</span>
+          <h2 class="section-title">Top Anime</h2>
+        </div>
+        <a href="#" class="see-all" data-section="anime">See All →</a>
+      </div>
+      <div class="row-wrapper">
+        <button class="row-arrow row-arrow--left" data-row="anime">‹</button>
+        <div class="movies-row" id="animeRow"></div>
+        <button class="row-arrow row-arrow--right" data-row="anime">›</button>
+      </div>
+    </section>
+
+    <!-- TOP RATED -->
+    <section class="content-section" id="topRatedSection">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">⭐</span>
+          <h2 class="section-title">Top Rated All Time</h2>
+        </div>
+        <a href="#" class="see-all" data-section="top-rated">See All →</a>
+      </div>
+      <div class="row-wrapper">
+        <button class="row-arrow row-arrow--left" data-row="toprated">‹</button>
+        <div class="movies-row" id="topRatedRow"></div>
+        <button class="row-arrow row-arrow--right" data-row="toprated">›</button>
+      </div>
+    </section>
+
+    <!-- GRID VIEW (for filtered/all content) -->
+    <section class="content-section" id="gridSection" style="display:none;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag" id="gridTag">🎬</span>
+          <h2 class="section-title" id="gridTitle">All Movies</h2>
+        </div>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+      <div class="movies-grid" id="moviesGrid"></div>
+      <div class="pagination" id="pagination"></div>
+    </section>
+
+  </main>
+
+  <!-- WATCHLIST PANEL -->
+  <div class="panel-overlay" id="panelOverlay"></div>
+  <aside class="watchlist-panel" id="watchlistPanel">
+    <div class="panel-header">
+      <h3>My Watchlist</h3>
+      <button class="panel-close" id="panelClose">✕</button>
+    </div>
+    <div class="panel-body" id="watchlistContent">
+      <div class="empty-state">
+        <div class="empty-icon">🎬</div>
+        <p>Your watchlist is empty</p>
+        <span>Add movies to keep track of what you want to watch</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MOVIE DETAIL MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="movie-modal" id="movieModal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-hero" id="modalHero">
+        <div class="modal-hero-bg" id="modalHeroBg"></div>
+        <div class="modal-hero-overlay"></div>
+        <div class="modal-hero-content">
+          <div class="modal-poster-wrap">
+            <img class="modal-poster" id="modalPoster" src="" alt="" />
+          </div>
+          <div class="modal-info">
+            <div class="modal-badges" id="modalBadges"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-meta" id="modalMeta"></div>
+            <p class="modal-overview" id="modalOverview"></p>
+            <div class="modal-actions">
+              <button class="btn-primary" id="modalTrailerBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Play Trailer
+              </button>
+              <button class="btn-ghost" id="modalWatchlistBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                Watchlist
+              </button>
+              <button class="btn-ghost" id="modalFavBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                Favorite
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-tab="cast">Cast</button>
+          <button class="modal-tab" data-tab="similar">Similar</button>
+          <button class="modal-tab" data-tab="details">Details</button>
+        </div>
+        <div class="modal-tab-content" id="modalTabContent">
+          <div class="tab-loading">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAILER MODAL -->
+  <div class="trailer-overlay" id="trailerOverlay">
+    <div class="trailer-container">
+      <button class="trailer-close" id="trailerClose">✕</button>
+      <div class="trailer-frame" id="trailerFrame"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">◈ CINEVERSE</div>
+      <p class="footer-note">Data provided by <a href="https://www.themoviedb.org" target="_blank">TMDB</a> & <a href="https://jikan.moe" target="_blank">Jikan API</a></p>
+      <p class="footer-copy">© 2025 Cineverse. Built for movie lovers.</p>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
